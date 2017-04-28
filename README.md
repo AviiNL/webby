@@ -13,6 +13,8 @@ webby(8081, __dirname + '/controllers');
 ```
 Thats all there is to it!
 
+Look in the `example` directory for a fully working example and be amazed at it's simplicity!
+
 ## Controllers
 Every `.js` file in the controllers directory is the first segment of the route.
 For example `/controllers/bakery.js` will hold all routes like `http://localhost:8081/bakery`.
@@ -43,3 +45,7 @@ arg2 = "world";
 arg3 = "test";
 ```
   
+## Sidenote
+You never need to restart the server itself when working on the controllers.
+They are dynamically loaded on each page request.
+Just make your edits and refresh the page!
