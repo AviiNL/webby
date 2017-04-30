@@ -46,6 +46,17 @@ module.exports = {
         });
     },
 
+    getIntercept: {
+        'middleware': [
+            'intercept'
+        ],
+        'method': (req, res) => {
+            return {
+                'this-wont': 'ever-run!'
+            };
+        }
+    },
+
     postPost: (req, res) => {
         res.send({
             you: 'posted',
