@@ -1,6 +1,6 @@
 {
   "name": "webby.js",
-  "version": "0.0.4",
+  "version": "0.1.0",
   "description": "Microframework for express",
   "main": "index.js",
   "scripts": {
