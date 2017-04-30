@@ -4,7 +4,7 @@
 WebbyJS is a micro framework to quickly create simple web applications built on top of express.js
 
 ## Install
-just run `npm install webby.js` to install webby
+Just run `npm install webby.js --save` to install webby
 
 ## Example
 ```js
@@ -44,7 +44,37 @@ arg1 = "hello";
 arg2 = "world";
 arg3 = "test";
 ```
-  
+
+## Templating
+Webby.js uses [swig](https://github.com/node-swig/swig-templates) as it's primary templating engine and can be used by defining the template_path in the options object.
+```js
+const webby = require('webby.js');
+webby(8081, {
+    controller_path: __dirname + '/controllers',
+    template_path: __dirname + '/theme'
+});
+```
+Templates use almost the same naming conventions as controllers and methods,
+however with templates it's in the directory structure and filename.
+For example, if you have a controller called bakery with a method called getCookie,
+Webby will check if the file `{template_path}/bakery/cookie.swig.html` exists
+and use that with the data returned from the controller.
+
+A Template file can also be overridden in the controller with the following usage:
+```js
+module.exports = {
+    'getIndex': {
+        template: 'custom/template',
+        method: (req, res) => {
+            return {
+                data: 'here',
+            };
+        }
+    }
+};
+```
+This will parse the `{template_path}/custom/template.swig.html` file with `{data: 'here'}` as it's data
+
 ## Sidenote
 You never need to restart the server itself when working on the controllers.
 They are dynamically loaded on each page request.

@@ -1,6 +1,6 @@
 module.exports = {
     'getIndex': (req, res) => {
-        return res.send({
+        return {
             'title': 'welcome',
             'body': 'Welcome to Avii\'s super simple expressjs framework.\n' +
                     'No bullshit, just get shit done!\n' +
@@ -9,6 +9,6 @@ module.exports = {
             'pages': [
                 '/test'
             ],
-        });
+        };
     }
 };
