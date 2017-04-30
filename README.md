@@ -75,6 +75,40 @@ module.exports = {
 ```
 This will parse the `{template_path}/custom/template.swig.html` file with `{data: 'here'}` as it's data
 
+## Middleware
+Register the middleware path in the options object: `{middleware_path: __dirname + '/middleware'}`
+Middlewares can ben defined on component and route level as follows:
+```js
+module.exports = {
+    'middleware': [
+        'set-header',
+    ],
+    'getIndex': {
+        ...
+```
+will be ran on every method in the component, or
+```js
+
+module.exports = {
+    'getIndex': {
+        middleware: [
+            'set-header',
+        ],
+        method: (req, res) => {
+            ...
+```
+to run the middleware only on the getIndex method. `set-header` is the filename of the middleware.
+
+The middleware file itself looks like:
+```js
+module.exports = (req, res, next) => {
+
+    res.header('X-Test-Header', 'Success');
+
+    return next();
+};
+```
+
 ## Sidenote
 You never need to restart the server itself when working on the controllers.
 They are dynamically loaded on each page request.
