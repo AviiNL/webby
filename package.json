@@ -10,7 +10,8 @@
   "license": "MIT",
   "dependencies": {
     "body-parser": "^1.17.1",
-    "express": "^4.15.2"
+    "express": "^4.15.2",
+    "swig-templates": "^2.0.2"
   },
   "repository": {
     "type": "git",
