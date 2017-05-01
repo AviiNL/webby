@@ -15,7 +15,10 @@ module.exports = (port, options) => {
     const app = new express();
 
     app.disable('x-powered-by');
-    app.use(express.static(options.static_path || ''));
+    if(options.hasOwnProperty('static_path')) {
+        app.use(express.static(options.static_path));
+    }
+
     app.use(bodyParser.json());
     app.use(bodyParser.urlencoded({extended: true}));
 
@@ -57,7 +60,7 @@ module.exports = (port, options) => {
 
         if (!fs.existsSync(`${options.controller_path}/${component}.js`)) {
             console.log(`Component ${component} not found`);
-            return res.send({
+            return res.status(404).send({
                 'code':      404,
                 'component': component,
             });
@@ -75,7 +78,7 @@ module.exports = (port, options) => {
 
         if (!cmp.hasOwnProperty(method)) {
             console.log(`Method ${method} not found!`);
-            return res.send({
+            return res.status(404).send({
                 'code':      404,
                 'component': component,
                 'method':    method,
@@ -105,7 +108,7 @@ module.exports = (port, options) => {
 
             if (cmp[method].hasOwnProperty('level')) {
                 if (cmp[method].level > 100) {
-                    return res.send({
+                    return res.status(401).send({
                         'code':      401,
                         'component': component,
                         'method':    method,
