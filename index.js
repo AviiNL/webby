@@ -15,6 +15,7 @@ module.exports = (port, options) => {
     const app = new express();
 
     app.disable('x-powered-by');
+    app.use(express.static(options.static_path || ''));
     app.use(bodyParser.json());
     app.use(bodyParser.urlencoded({extended: true}));
 

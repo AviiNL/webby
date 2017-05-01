@@ -109,6 +109,16 @@ module.exports = (req, res, next) => {
 };
 ```
 
+### Static Content
+Static content can be served by suppying the `options.static_path` to the second parameter of the webby function
+```js
+const webby = require('webby.js');
+webby(8081, {
+    controller_path: __dirname + '/controllers',
+    static_path: __dirname + '/static'
+});
+```
+
 ## Sidenote
 You never need to restart the server itself when working on the controllers.
 They are dynamically loaded on each page request.
