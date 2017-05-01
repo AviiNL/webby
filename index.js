@@ -19,6 +19,11 @@ module.exports = (port, options) => {
         app.use(express.static(options.static_path));
     }
 
+    if (!options.cache) {
+        app.set('view cache', false);
+        swig.setDefaults({ cache: false });
+    }
+
     app.use(bodyParser.json());
     app.use(bodyParser.urlencoded({extended: true}));
 
@@ -40,10 +45,6 @@ module.exports = (port, options) => {
     };
 
     app.use("/", (req, res) => {
-        if (!options.cache) {
-            swig.invalidateCache();
-        }
-
         let args = req.path.substr(1).split('/').filter(n => n);
 
         let component = "index";
