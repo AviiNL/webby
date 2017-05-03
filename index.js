@@ -97,6 +97,16 @@ module.exports = (port, options) => {
                 return;
             }
 
+            if (data.constructor.name === 'Promise') {
+                return data.then((data) => {
+                    if (fs.existsSync(`${options.template_path}/${component}/${template}.swig.html`)) {
+                        return res.send(swig.compileFile(`${options.template_path}/${component}/${template}.swig.html`)(data));
+                    }
+
+                    return res.send(data);
+                }, console.error);
+            }
+
             // auto template
             if (fs.existsSync(`${options.template_path}/${component}/${template}.swig.html`)) {
                 return res.send(swig.compileFile(`${options.template_path}/${component}/${template}.swig.html`)(data));
@@ -124,17 +134,26 @@ module.exports = (port, options) => {
                 }
             }
 
-            if (cmp[method].hasOwnProperty('method')) {
+            // custom defined template
+            if (cmp[method].hasOwnProperty('template')) {
+                template = cmp[method].template;
+            }
 
+            if (cmp[method].hasOwnProperty('method')) {
                 let data = cmp[method].method.apply(cmp[method].method, args);
 
                 if (data.constructor.name === 'ServerResponse') {
-                    return;
+                    return data;
                 }
 
-                // custom defined template
-                if (cmp[method].hasOwnProperty('template')) {
-                    return res.send(swig.compileFile(`${options.template_path}/${cmp[method].template}.swig.html`)(data));
+                if (data.constructor.name === 'Promise') {
+                    return data.then((data) => {
+                        if (fs.existsSync(`${options.template_path}/${component}/${template}.swig.html`)) {
+                            return res.send(swig.compileFile(`${options.template_path}/${component}/${template}.swig.html`)(data));
+                        }
+
+                        return res.send(data);
+                    }, console.error);
                 }
 
                 // auto template
