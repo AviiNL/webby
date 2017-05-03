@@ -104,7 +104,10 @@ module.exports = (port, options) => {
                     }
 
                     return res.send(data);
-                }, console.error);
+                }, (err) => {
+                    console.error(err);
+                    return res.status(500).send(err);
+                });
             }
 
             // auto template
@@ -153,7 +156,10 @@ module.exports = (port, options) => {
                         }
 
                         return res.send(data);
-                    }, console.error);
+                    }, (err) => {
+                        console.error(err);
+                        return res.status(500).send(err);
+                    });
                 }
 
                 // auto template
