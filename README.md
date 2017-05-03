@@ -75,6 +75,18 @@ module.exports = {
 ```
 This will parse the `{template_path}/custom/template.swig.html` file with `{data: 'here'}` as it's data
 
+## Promises
+All controller methods also support returning native Promise objects
+```js
+'getIndex': (req, res) => {
+    return new Promise((resolve, reject) => {
+        resolve({
+            data: 'here!'
+        });
+    });
+}
+```
+
 ## Middleware
 Register the middleware path in the options object: `{middleware_path: __dirname + '/middleware'}`
 Middlewares can ben defined on component and route level as follows:
@@ -97,6 +109,7 @@ module.exports = {
         method: (req, res) => {
             ...
 ```
+
 to run the middleware only on the getIndex method. `set-header` is the filename of the middleware.
 
 The middleware file itself looks like:
